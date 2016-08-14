@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Updater</title>
+
+	<link rel="stylesheet" href="./css/jquery.flipster.min.css">
+	<link rel="stylesheet" href="./css/styles.css">
+
+</head>
+<body>  
+	<div class="status"></div>
+	<script>
+	var fs = require('fs');
+	var unzip = require('unzip/unzip.js');
+	var http = require('https');
+	document.querySelector('.status').innerHTML = 'Initializing...';
+
+	//If there is a version or not
+	if (fs.existsSync('./version.json')) {
+		document.querySelector('.status').innerHTML = 'You already have a version';
+		var copy = fs.createReadStream('./version.json').pipe(fs.createWriteStream('./actualVersion.json'));
+		copy.on('finish', function() {
+			var actualVersion = require('./actualVersion.json'); 
+			document.querySelector('.status').innerHTML = 'Checking version...';
+			var version = fs.createWriteStream("./version.json");
+			version.on('finish', function() { 
+				var config = require('./version.json');
+				if (actualVersion.version < config.version) {  
+					document.querySelector('.status').innerHTML = 'There is a newer version available';
+					download();
+				}else if(actualVersion.version == config.version){
+					document.querySelector('.status').innerHTML = 'Your installation is in the newer update. ';
+				}
+			});
+			var request = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxDownloader/master/version.json", function(response) {
+    	    response.pipe(version);
+		});
+		});
+	}else{ 
+		download();
+	}//close If
+
+	function download() {
+			document.querySelector('.status').innerHTML = 'Checking version...';
+			var version = fs.createWriteStream("version.json");
+			version.on('finish', function() {
+			document.querySelector('.status').innerHTML = 'Version Checked.';
+			var file = fs.createWriteStream("server.zip");
+		var config = require('./version.json');
+		file.on('finish', function() {
+        	document.querySelector('.status').innerHTML = 'Finished downloading!';
+			//Unzip the file
+			document.querySelector('.status').innerHTML = 'Extracting...';
+			var un = fs.createReadStream('./server.zip').pipe(unzip.Extract({ path: './server' }));
+			un.on('finish', function() {
+				document.querySelector('.status').innerHTML = 'Installation complete!';
+			});
+    	});
+    var request1 = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxDownloader/master/downloads/" + config.version + ".zip", function(response) {
+        response.pipe(file);
+        document.querySelector('.status').innerHTML = 'Updating...';
+    	});
+});
+
+var request = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxDownloader/master/version.json", function(response) {
+    response.pipe(version);
+});
+	}
+
+
+	</script> 
+</body>
+</html>

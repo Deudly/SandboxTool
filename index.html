@@ -36,7 +36,7 @@
 					document.querySelector('.status').innerHTML = 'Your installation is in the newer update. ';
 				}
 			});
-			var request = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxDownloader/master/version.json", function(response) {
+			var request = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxTool/master/downloads/version.json", function(response) {
     	    response.pipe(version);
 		});
 		});
@@ -60,13 +60,13 @@
 				document.querySelector('.status').innerHTML = 'Installation complete!';
 			});
     	});
-    var request1 = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxDownloader/master/downloads/" + config.version + ".zip", function(response) {
+    var request1 = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxTool/master/downloads/" + config.version + ".zip", function(response) {
         response.pipe(file);
         document.querySelector('.status').innerHTML = 'Updating...';
     	});
 });
 
-var request = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxDownloader/master/version.json", function(response) {
+var request = http.get("https://raw.githubusercontent.com/DeudlyYT/SandboxTool/master/downloads/version.json", function(response) {
     response.pipe(version);
 });
 	}

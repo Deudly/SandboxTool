@@ -1,5 +1,5 @@
 # SandboxTool
-[![NPM version](https://img.shields.io/npm/v/sandboxtools.svg)](https://www.npmjs.com/package/SandboxTools)
+[![NPM version](https://img.shields.io/npm/v/SandboxTools.svg)](https://www.npmjs.com/package/SandboxTools)
 
 App for download & update compiled versions of LOL sandbox 
 

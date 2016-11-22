@@ -1,4 +1,5 @@
 # SandboxTool
+[![NPM version](https://img.shields.io/npm/v/flying-squid-essentials.svg)](https://www.npmjs.com/package/SandboxTools)
 
 App for download & update compiled versions of LOL sandbox 
 
